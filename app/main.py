@@ -12,7 +12,9 @@ def register_molecule(molecule: schemas.MoleculeCreate, db: Session = Depends(ge
     try:
         return crud.create_molecule(db, molecule.smiles)
     except ValueError as e:
-        raise HTTPException(status_code=409, detail=str(e))
+        if "Duplicate" in str(e):
+            raise HTTPException(status_code=409, detail=str(e))
+        raise HTTPException(status_code=422, detail=str(e))
 
 @app.get("/molecules/{molecule_id}", response_model=schemas.MoleculeResponse)
 def read_molecule(molecule_id: int, db: Session = Depends(get_db)):
