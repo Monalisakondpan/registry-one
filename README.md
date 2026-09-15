@@ -22,7 +22,7 @@ Molecule registration API demonstrating chemical structure canonicalization and 
 - `GET /molecules` - list molecules (paginated)
 
 ## Run locally
-1. Start Postgres: `docker run --name registry-db -e POSTGRES_PASSWORD=devpass123 -e POSTGRES_DB=registry -p 5432:5432 -d postgres:16`
+1. Start Postgres: `docker run --name registry-db -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=registry -p 5432:5432 -d postgres:16`
 2. Install dependencies: `pip install -r requirements.txt`
-3. Run server: 'uvicorn app.main:app --reload'
+3. Run server: `uvicorn app.main:app --reload`
 4. Visit `http://127.0.0.1:8000/docs` for interactive API docs
