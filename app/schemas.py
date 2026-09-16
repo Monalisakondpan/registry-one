@@ -14,3 +14,7 @@ class MoleculeResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class SimilarityResult(BaseModel):
+    molecule: MoleculeResponse
+    similarity: float

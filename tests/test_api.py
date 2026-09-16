@@ -25,3 +25,8 @@ def test_list_molecules_returns_200():
     response = client.get("/molecules")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+
+def test_search_molecules_find_similar():
+    response = client.get("/molecules/search", params={"smiles": "CCO", "threshold": 0.1})
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)

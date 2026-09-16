@@ -16,6 +16,14 @@ def register_molecule(molecule: schemas.MoleculeCreate, db: Session = Depends(ge
             raise HTTPException(status_code=409, detail=str(e))
         raise HTTPException(status_code=422, detail=str(e))
 
+@app.get("/molecules/search", response_model=list[schemas.SimilarityResult])
+def search_molecules(smiles: str, threshold: float = 0.5, db: Session = Depends(get_db)):
+    try:
+        results = crud.search_similar_molecules(db, smiles, threshold)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    return [{"molecule": mol, "similarity": sim} for mol, sim in results]
+
 @app.get("/molecules/{molecule_id}", response_model=schemas.MoleculeResponse)
 def read_molecule(molecule_id: int, db: Session = Depends(get_db)):
     molecule = crud.get_molecule(db, molecule_id)

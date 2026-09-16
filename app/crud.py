@@ -30,4 +30,15 @@ def get_molecule(db: Session, molecule_id: int) -> Molecule | None:
 
 def get_all_molecules(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Molecule).offset(skip).limit(limit).all()
+
+def search_similar_molecules(db: Session, smiles: str, threshold: float = 0.5):
+    from app.chem import calculate_similarity
+    all_molecules = db.query(Molecule).all()
+    results = []
+    for mol in all_molecules:
+        similarity = calculate_similarity(smiles, mol.canonical_smiles)
+        if similarity >= threshold:
+            results.append((mol, similarity))
+    results.sort(key=lambda x: x[1], reverse=True)
+    return results
     
