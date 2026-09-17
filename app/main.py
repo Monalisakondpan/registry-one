@@ -34,3 +34,9 @@ def read_molecule(molecule_id: int, db: Session = Depends(get_db)):
 @app.get("/molecules", response_model=list[schemas.MoleculeResponse])
 def list_molecules(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_all_molecules(db, skip, limit)
+
+@app.delete("/molecules/{molecule_id}", status_code=204)
+def delete_molecule(molecule_id: int, db: Session = Depends(get_db)):
+    deleted = crud.delete_molecule(db, molecule_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Molecule not found")

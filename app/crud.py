@@ -41,4 +41,12 @@ def search_similar_molecules(db: Session, smiles: str, threshold: float = 0.5):
             results.append((mol, similarity))
     results.sort(key=lambda x: x[1], reverse=True)
     return results
+
+def delete_molecule(db: Session, molecule_id: int) -> bool:
+    molecule = db.query(Molecule).filter(Molecule.id == molecule_id).first()
+    if molecule is None:
+        return False
+    db.delete(molecule)
+    db.commit()
+    return True
     
