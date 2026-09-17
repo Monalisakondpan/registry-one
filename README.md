@@ -21,6 +21,7 @@ Molecule registration API demonstrating chemical structure canonicalization and 
 - `GET /molecules/{id}` - fetch a molecule by ID
 - `GET /molecules` - list molecules (paginated)
 - `GET /molecules/search?smiles={smiles}&threshold={threshold}` - find structurally similar molecules using RDKit fingerprint similarity
+- `DELETE /molecules/{id}` - remove a molecule from the registry
 
 ## Run locally
 
